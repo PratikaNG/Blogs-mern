@@ -5,10 +5,13 @@ import userRouter from "./routes/user.route.js"
 import postsRouter from "./routes/post.route.js"
 import commentsRouter from "./routes/comment.route.js"
 import connectDB from "./lib/connectDB.js"
+import webhooksRouter from "./routes/webhooks.route.js"
 
 const app = express()
 const port = process.env.PORT || 3001;
 connectDB()
+app.use("/webhooks",webhooksRouter)
+
 app.use(express.json())
 app.get("/test",(req,res)=>{
   res.status(200).send("it works!")
