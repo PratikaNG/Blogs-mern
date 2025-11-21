@@ -1,11 +1,29 @@
 import React from "react";
 import IkImage from "../components/IkImage";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import PostMenuActions from "../components/PostMenuActions";
 import Search from "../components/Search";
 import Comments from "../components/Comments";
+import useQuery from "@tanstack/react-query"
+import axios from "axios"
+import {format} from "timeago.js"
 
+ const fetchPost = async(slug) =>{
+    const slug = useParams()
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`)
+    return res.data
+  }
 const SinglePostPage = () => {
+  
+ 
+  const {isPending,error,data} = useQuery({
+    queryKey:["post",slug],
+    queryFn:()=>fetchPost(slug)
+  })
+  if (isPending) return 'Loading...'
+  
+  if (error) return 'An error has occurred: ' + error.message
+  if(!data) return "Post not found!"
   return (
     <div className="flex flex-col gap-8">
       {/* detail */}
@@ -13,23 +31,29 @@ const SinglePostPage = () => {
         <div className="md:w-3/5 flex flex-col gap-8">
           <h1 className="text-xl md:text-3xl  xl:text-4xl wxl:text-5xl font-medium">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+            {/* {data.title} */}
           </h1>
           <div className="flex items-center gap-2 text-gray-500 text-sm">
             <span>Written By</span>
             <Link className="text-blue-800">John Doe</Link>
+            {/* <Link className="text-blue-800">{data.user.username}</Link> */}
             <span>on</span>
             <Link className="text-blue-800">Web Design</Link>
+            <Link className="text-blue-800">{data.category}</Link>
             <span>2 days ago</span>
+             {/* <span>{format(data.createdAt)}</span> */}
           </div>
           <p className="text-gray-500 font-medium">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda
             blanditiis fugiat, vero necessitatibus ullam distinctio nisi quas
             repellendus! Mollitia nulla omnis ratione quasi, minus fugiat
             accusantium debitis exercitationem ex laudantium.
+            {/* {data.desc} */}
           </p>
         </div>
         <div className="hidden md:block w-2/5">
           <IkImage src="postImg.jpeg" w="600" className="rounded-2xl" />
+          {/* {data.user.img && <IkImage src={data.user.img} w="600" className="rounded-2xl" />} */}
         </div>
       </div>
       {/* content */}

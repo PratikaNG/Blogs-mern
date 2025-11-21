@@ -1,9 +1,10 @@
 import React from 'react'
 import IkImage from './IkImage'
-import { Link } from 'react-router'
+import { Link  } from 'react-router'
 import {format} from "timeago.js"
 
 const PostListItem = ({post}) => {
+
   return (
     <div className='flex flex-col lg:flex-row gap-8 mb-12'>
       {/* image */}
@@ -15,7 +16,7 @@ const PostListItem = ({post}) => {
       </div>
       {/* details */}
       <div className='flex flex-col gap-4 lg:w-2/3'>
-        <Link to="test" className='text-4xl font-semibold'>
+        <Link to={`/${post.slug}`} className='text-4xl font-semibold'>
         {/* {post.title} */}
         Lorem ipsum dolor sit amet consectetur adipisicing elit. </Link>
       <div className='flex items-center gap-2 text-gray-500 text-sm'>
