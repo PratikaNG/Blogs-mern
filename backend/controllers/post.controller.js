@@ -9,8 +9,15 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 });
 export const getPosts = async(req,res) =>{
-      const posts = await Post.find()
-    res.status(200).send(posts) 
+  const page = parseInt(req.query.page || 1)
+  const limit = parseInt(req.query.limit || 5)
+  const posts = await Post.find()
+  .populate("user","username")
+  .limit(limit)
+  .skip((page-1)*limit)
+  const totalPosts = await Post.countDocuments()
+  const hasMore=  page * limit < totalPosts
+  res.status(200).json({posts,hasMore}) 
 
 }
 export const getPost = async(req,res) =>{
