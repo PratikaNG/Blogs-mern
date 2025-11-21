@@ -1,9 +1,15 @@
 import { Menu, X } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import IkImage from './IkImage'
 import { Link } from 'react-router'
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignInButton, useAuth, UserButton } from '@clerk/clerk-react';
 const Navbar = () => {
+
+    const {getToken} = useAuth()
+
+    useEffect(()=>{
+      getToken().then((token)=>{console.log(token)})
+    },[])
 
     const [open,setOpen] = useState(false)
   return (
