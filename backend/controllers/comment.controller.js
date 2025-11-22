@@ -36,7 +36,11 @@ const clerkUserId = req.auth().userId
      if (!clerkUserId) {
         return res.status(401).json({ message: "Not Authenticated!" });
       }
-    
+       const role = req.auth().sessionClaims?.metadata?.role || "user";
+        if (role === "admin") {
+          await Post.findByIdAndDelete(req.params.id);
+          return res.status(200).send("Post has been deleted");
+        }
       const user = await User.findOne({ clerkUserId });
     
       if (!user) {

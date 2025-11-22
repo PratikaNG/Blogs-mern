@@ -14,7 +14,6 @@ const fetchComments = async(postId) =>{
 const Comments = () => {
   const user = useUser()
   const { getToken } = useAuth();
-  const { isLoaded, isSignedIn } = useUser();
     const {isPending,error,data} = useQuery({
       queryKey:["comments",postId],
       queryFn:()=>fetchComments(postId)
@@ -64,7 +63,7 @@ const Comments = () => {
           Send
         </button>
       </form>
-      {isPending ? "Loading..." : error ? "Error loading comments!" : 
+      {/* {isPending ? "Loading..." : error ? "Error loading comments!" : 
       <>
       {mutation.isPaused && (<Comment comment={{desc:`${mutation.variables.desc} (Sending...)`,
       createdAt:new Date.now(),
@@ -73,9 +72,9 @@ const Comments = () => {
         username:user.username
       }
       }}/>)}
-      {data.map((item)=><Comment key={item._id} comment={item}/>)}
+      {data.map((item)=><Comment key={item._id} comment={item} postId={postId}/>)}
       </>
-      }
+      } */}
       
       <Comment/>
       <Comment/>

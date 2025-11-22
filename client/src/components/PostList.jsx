@@ -9,32 +9,33 @@ const PostList = (pageParam) => {
   const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`,{
     params:{page:pageParam}
   })
+  console.log("fetchPosts",res)
   return res.data
 }
-   const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery({
-    queryKey: ['posts'],
-    queryFn: (pageParam = 1)=>fetchPosts(pageParam),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, pages) => lastPage.hasMore ? pages.length + 1 : undefined,
-  })
+  //  const {
+  //   data,
+  //   error,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   isFetching,
+  //   isFetchingNextPage,
+  //   status,
+  // } = useInfiniteQuery({
+  //   queryKey: ['posts'],
+  //   queryFn: (pageParam = 1)=>fetchPosts(pageParam),
+  //   initialPageParam: 1,
+  //   getNextPageParam: (lastPage, pages) => lastPage.hasMore ? pages.length + 1 : undefined,
+  // })
 
-  console.log("data",data)
-  if (status === "loading") return 'Loading...'
+  // console.log("data",data)
+  // if (status === "loading") return 'Loading...'
   
-  if (error) return 'An error has occurred: ' + error.message
-  const allPosts = data.pages.flatMap((page)=>page.posts) || []
-  console.log("data",data)
+  // if (error) return 'An error has occurred: ' + error.message
+  // const allPosts = data.pages.flatMap((page)=>page.posts) || []
+  // console.log("data",data)
   return (
     <div className='flex flex-col gap-4 mb-8'>
-      <InfiniteScroll
+      {/* <InfiniteScroll
   dataLength={allPosts.length} //This is important field to render the next data
   next={fetchNextPage}
   hasMore={!hasNextPage}
@@ -46,7 +47,7 @@ const PostList = (pageParam) => {
   }
 >
 
-      {allPosts.map((item)=><PostListItem key={item._id} post={item}/>)}</InfiniteScroll>
+      {allPosts.map((item)=><PostListItem key={item._id} post={item}/>)}</InfiniteScroll> */}
       
       <PostListItem/>
       <PostListItem/>

@@ -4,16 +4,16 @@ import { Link, useParams } from "react-router";
 import PostMenuActions from "../components/PostMenuActions";
 import Search from "../components/Search";
 import Comments from "../components/Comments";
-import useQuery from "@tanstack/react-query"
+import {useQuery} from "@tanstack/react-query"
 import axios from "axios"
 import {format} from "timeago.js"
 
  const fetchPost = async(slug) =>{
-    const slug = useParams()
     const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`)
     return res.data
   }
 const SinglePostPage = () => {
+    const {slug} = useParams()
   
  
   const {isPending,error,data} = useQuery({
