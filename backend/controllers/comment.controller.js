@@ -25,7 +25,10 @@ export const addComment = async(req,res)=>{
       const newComment = new Comment({...req,body,user:user._id,post:postId})
 
       const savedComments = await newComment.save()
-      res.status(200).json({savedComments})
+      setTimeout(()=>{
+        res.status(200).json({savedComments})
+      },3000)
+      
 }
 export const deleteComment = async(req,res)=>{
 const clerkUserId = req.auth().userId
